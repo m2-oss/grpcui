@@ -109,8 +109,10 @@ func Handler(ch grpcdynamic.Channel, target string, methods []*desc.MethodDescri
 				return
 			}
 			c := &http.Cookie{
-				Name:  csrfCookieName,
-				Value: base64.RawURLEncoding.EncodeToString(tokenBytes),
+				Name:     csrfCookieName,
+				Value:    base64.RawURLEncoding.EncodeToString(tokenBytes),
+				SameSite: http.SameSiteNoneMode,
+				Secure:   true,
 			}
 			http.SetCookie(w, c)
 		}
